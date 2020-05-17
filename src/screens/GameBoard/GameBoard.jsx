@@ -18,10 +18,12 @@ const GameBoard = () => {
   const { Column, Row } = Grid;
   const { setGameOnScoreBoard } = ScoreBoard.actions;
 
-  const [board, setBoard] = useState([[]])
-  const [bombs, setBombs] = useState(0)
-  const [cells, setCells] = useState([[]])
-  const [timeElapsed, setTimeElapsed] = useState(0)
+  const [board, setBoard] = useState([[]]);
+  const [bombs, setBombs] = useState(0);
+  const [cells, setCells] = useState([[]]);
+  const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(0);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -30,18 +32,18 @@ const GameBoard = () => {
   const playerNickname = useSelector((state) => state.gameBoard.playerNickname);
 
   useEffect(() => {
-    let boardMatrix = Array(boardHeight)
+    let boardMatrix = Array(Number(boardHeight))
       .fill(0)
-      .map(() => Array(boardWidth).fill(0));
+      .map(() => Array(Number(boardWidth)).fill(0));
 
-    const cellMatrix = Array(boardHeight)
+    const cellMatrix = Array(Number(boardHeight))
       .fill(0)
-      .map(() => Array(boardWidth).fill(0));
+      .map(() => Array(Number(boardWidth)).fill(0));
 
     let count = 0;
 
     for (let index = 0; index < boardMatrix.length; index++) {
-      const position = Math.floor(Math.random() * 10);
+      const position = Math.floor(Math.random() * Math.floor(boardWidth));
 
       boardMatrix[index][position] = "X";
       count++;
@@ -53,10 +55,16 @@ const GameBoard = () => {
           let summation = 0;
 
           if (A > 0 && boardMatrix[A - 1][B] === "X") summation++;
-          if (A < boardMatrix.length - 1 && boardMatrix[A + 1][B] === "X") summation++;
-          if (B < boardMatrix.length - 1 && boardMatrix[A][B + 1] === "X") summation++;
+          if (A < boardMatrix.length - 1 && boardMatrix[A + 1][B] === "X")
+            summation++;
+          if (B < boardMatrix.length - 1 && boardMatrix[A][B + 1] === "X")
+            summation++;
           if (B > 0 && boardMatrix[A][B - 1] === "X") summation++;
-          if (A < boardMatrix.length - 1 && B > 0 && boardMatrix[A + 1][B - 1] === "X")
+          if (
+            A < boardMatrix.length - 1 &&
+            B > 0 &&
+            boardMatrix[A + 1][B - 1] === "X"
+          )
             summation++;
           if (
             A < boardMatrix.length - 1 &&
@@ -65,7 +73,11 @@ const GameBoard = () => {
           )
             summation++;
           if (A > 0 && B > 0 && boardMatrix[A - 1][B - 1] === "X") summation++;
-          if (A > 0 && B < boardMatrix.length - 1 && boardMatrix[A - 1][B + 1] === "X")
+          if (
+            A > 0 &&
+            B < boardMatrix.length - 1 &&
+            boardMatrix[A - 1][B + 1] === "X"
+          )
             summation++;
 
           boardMatrix[A][B] = summation;
@@ -80,7 +92,7 @@ const GameBoard = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      updateTime()
+      updateTime();
     }, 1000);
 
     return () => {
@@ -89,26 +101,31 @@ const GameBoard = () => {
   }, [timeElapsed]);
 
   const updateTime = () => {
-    setTimeElapsed(previousState => previousState + 1);
-  }
-  
+    setTimeElapsed((previousState) => previousState + 1);
+  };
+
   const onGameEnd = () => {
-    dispatch(setGameOnScoreBoard({ bombs, playerNickname, timeElapsed }));
-  }
+    alert("GAME OVER");
+    dispatch(setGameOnScoreBoard({ playerNickname, score, timeElapsed }));
+    history.push("/");
+  };
+
+  useEffect(() => {
+    if (gameOver) {
+      onGameEnd();
+    }
+  });
 
   const visitCell = (event, A, B) => {
     event.preventDefault();
-
-    if (board[A][B] === "X") {
-      alert("GAME OVER");
-      onGameEnd()
-      history.push("/");
-    }
 
     depthFirstSearchCell(A, B);
 
     cells[A][B] = 1;
     setCells([...cells]);
+    setScore((score) => score + 1);
+
+    if (board[A][B] === "X") setGameOver(true);
   };
 
   const flagCell = (event, A, B) => {
@@ -117,13 +134,13 @@ const GameBoard = () => {
     if (cells[A][B] !== "F") {
       if (bombs > 0) {
         cells[A][B] = "F";
-        setBombs(bombs => bombs - 1);
+        setBombs((bombs) => bombs - 1);
         setCells([...cells]);
       }
     } else {
-      cells[A][B] = 0
-      setBombs(bombs => bombs + 1);
-      setCells([...cells])
+      cells[A][B] = 0;
+      setBombs((bombs) => bombs + 1);
+      setCells([...cells]);
     }
   };
 
@@ -160,22 +177,27 @@ const GameBoard = () => {
       >
         <Row centered columns={2}>
           <Column textAlign="center">
-            <StatusCard bombs={bombs} playerNickname={playerNickname} timeElapsed={timeElapsed} />
+            <StatusCard
+              bombs={bombs}
+              playerNickname={playerNickname}
+              timeElapsed={timeElapsed}
+            />
           </Column>
         </Row>
         <Row centered>
           <Column textAlign="center">
             {board.map((boardRow, A) => (
-              <div>
+              <div key={`${A}-${A}`}>
                 {boardRow.map((element, B) => (
                   <div
-                    onClick={(event) => visitCell(event, A, B)}
-                    onContextMenu={(event) => flagCell(event, A, B)}
                     className={`gameboard__cell ${
                       cells[A][B] === 0 || cells[A][B] === "F"
                         ? ""
                         : "gameboard__cell--visited"
                     }`}
+                    key={`${A}-${B}`}
+                    onClick={(event) => visitCell(event, A, B)}
+                    onContextMenu={(event) => flagCell(event, A, B)}
                   >
                     {cells[A][B] === 0 ? (
                       ""
@@ -188,6 +210,7 @@ const GameBoard = () => {
                       ""
                     ) : board[A][B] === "X" ? (
                       <FontAwesomeIcon
+                        className="gameboard__bomb-icon"
                         icon={bombIcon}
                       />
                     ) : (
@@ -201,11 +224,11 @@ const GameBoard = () => {
         </Row>
         <Row centered columns={2}>
           <Column textAlign="center">
-            <Button primary size="huge">
-              <Link className="gameboard__navigation" to="/">
+            <Link className="gameboard__navigation" to="/">
+              <Button primary size="huge">
                 Return to the start screen
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Column>
         </Row>
       </Grid>

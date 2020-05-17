@@ -1,9 +1,13 @@
 import GameBoard from "./GameBoard";
+import { Provider } from "react-redux";
 import React from "react";
-import { render } from "@testing-library/react";
+import { Store } from "../../state/store";
+import { shallow } from "enzyme";
 
-test("renders learn react link", () => {
-  const { getByText } = render(<GameBoard />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it("Renders without crashing", () => {
+  shallow(
+    <Provider store={Store}>
+      <GameBoard />
+    </Provider>
+  );
 });

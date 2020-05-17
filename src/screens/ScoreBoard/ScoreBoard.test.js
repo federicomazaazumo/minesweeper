@@ -1,9 +1,13 @@
+import { Provider } from "react-redux";
 import React from "react";
 import ScoreBoard from "./ScoreBoard";
-import { render } from "@testing-library/react";
+import { Store } from "../../state/store";
+import { shallow } from "enzyme";
 
-test("renders learn react link", () => {
-  const { getByText } = render(<ScoreBoard />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it("Renders without crashing", () => {
+  shallow(
+    <Provider store={Store}>
+      <ScoreBoard />
+    </Provider>
+  );
 });

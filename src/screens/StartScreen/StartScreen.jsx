@@ -29,11 +29,11 @@ const StartScreen = () => {
       </Row>
       <Row centered>
         <Column textAlign="center">
-          <Button secondary size="huge">
-            <Link className="startscreen__navigation" to="/scoreboard">
-              Go to the score board
-            </Link>
-          </Button>
+          <Link className="startscreen__navigation" to="/scoreboard">
+            <Button primary size="huge">
+              Return to the start screen
+            </Button>
+          </Link>
         </Column>
       </Row>
     </Grid>

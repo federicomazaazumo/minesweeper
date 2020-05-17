@@ -1,12 +1,6 @@
 import "./ScoreBoard.scss";
 
-import {
-  Button,
-  Container,
-  Grid,
-  Label,
-  Table,
-} from "semantic-ui-react";
+import { Button, Container, Grid, Label, Table } from "semantic-ui-react";
 
 import { Link } from "react-router-dom";
 import React from "react";
@@ -43,15 +37,28 @@ const ScoreBoard = () => {
                 </TableRow>
               </Header>
               <Body>
-                {scoreBoard.map((score, index) => (
+                {scoreBoard.length > 0 ? (
+                  scoreBoard.map((score, index) => (
+                    <TableRow>
+                      <Cell>
+                        <Label
+                          color={index === 0 ? "yellow" : "grey"}
+                          ribbon={index === 0 ? true : false}
+                        >
+                          {score.playerNickname}
+                        </Label>
+                      </Cell>
+                      <Cell>{score.score}</Cell>
+                      <Cell>{score.timeElapsed}</Cell>
+                    </TableRow>
+                  ))
+                ) : (
                   <TableRow>
-                    <Cell>
-                      <Label color={index === 0 ? 'yellow' : ""} ribbon={index === 0 ? true : false}>{score.playerNickname}</Label>
-                    </Cell>
-                    <Cell>{score.bombs}</Cell>
-                    <Cell>{score.timeElapsed}</Cell>
+                    <Cell>No data</Cell>
+                    <Cell>No data</Cell>
+                    <Cell>No data</Cell>
                   </TableRow>
-                ))}
+                )}
               </Body>
             </Table>
           </Container>
@@ -59,11 +66,11 @@ const ScoreBoard = () => {
       </Row>
       <Row centered>
         <Column textAlign="center">
-          <Button primary size="huge">
-            <Link className="scoreboard__navigation" to="/">
+          <Link className="scoreboard__navigation" to="/">
+            <Button primary size="huge">
               Return to the start screen
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </Column>
       </Row>
     </Grid>

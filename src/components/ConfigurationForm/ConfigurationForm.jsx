@@ -104,7 +104,7 @@ const ConfigurationForm = () => {
               <Input
                 labelPosition="right"
                 name="bombsNumber"
-                onChange={(event) => setBoardBombs(event.target.value)}
+                onChange={(event) => setBoardBombs(Number(event.target.value))}
                 placeholder="Number of bombs"
                 type="number"
                 value={boardBombs}
@@ -114,7 +114,7 @@ const ConfigurationForm = () => {
               <Input
                 labelPosition="right"
                 name="boardHeight"
-                onChange={(event) => setBoardHeight(event.target.value)}
+                onChange={(event) => setBoardHeight(Number(event.target.value))}
                 placeholder="Height of the gameboard"
                 type="number"
                 value={boardHeight}
@@ -124,7 +124,7 @@ const ConfigurationForm = () => {
               <Input
                 labelPosition="right"
                 name="boardWidth"
-                onChange={(event) => setBoardWidth(event.target.value)}
+                onChange={(event) => setBoardWidth(Number(event.target.value))}
                 placeholder="Width of the gameboard"
                 type="number"
                 value={boardWidth}

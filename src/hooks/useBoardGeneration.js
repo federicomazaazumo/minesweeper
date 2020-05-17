@@ -32,10 +32,16 @@ const useBoardGeneration = (boardHeight, boardWidth) => {
           let summation = 0;
 
           if (A > 0 && boardMatrix[A - 1][B] === "X") summation++;
-          if (A < boardMatrix.length - 1 && boardMatrix[A + 1][B] === "X") summation++;
-          if (B < boardMatrix.length - 1 && boardMatrix[A][B + 1] === "X") summation++;
+          if (A < boardMatrix.length - 1 && boardMatrix[A + 1][B] === "X")
+            summation++;
+          if (B < boardMatrix.length - 1 && boardMatrix[A][B + 1] === "X")
+            summation++;
           if (B > 0 && boardMatrix[A][B - 1] === "X") summation++;
-          if (A < boardMatrix.length - 1 && B > 0 && boardMatrix[A + 1][B - 1] === "X")
+          if (
+            A < boardMatrix.length - 1 &&
+            B > 0 &&
+            boardMatrix[A + 1][B - 1] === "X"
+          )
             summation++;
           if (
             A < boardMatrix.length - 1 &&
@@ -44,7 +50,11 @@ const useBoardGeneration = (boardHeight, boardWidth) => {
           )
             summation++;
           if (A > 0 && B > 0 && boardMatrix[A - 1][B - 1] === "X") summation++;
-          if (A > 0 && B < boardMatrix.length - 1 && boardMatrix[A - 1][B + 1] === "X")
+          if (
+            A > 0 &&
+            B < boardMatrix.length - 1 &&
+            boardMatrix[A - 1][B + 1] === "X"
+          )
             summation++;
 
           boardMatrix[A][B] = summation;
@@ -57,14 +67,7 @@ const useBoardGeneration = (boardHeight, boardWidth) => {
     setCells(cellMatrix);
   }, [boardHeight, boardWidth]);
 
-  return [
-    board,
-    bombs,
-    cells,
-    setBoard,
-    setBombs,
-    setCells,
-  ];
+  return [board, bombs, cells, setBoard, setBombs, setCells];
 };
 
 export default useBoardGeneration;

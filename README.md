@@ -14,16 +14,34 @@ Second, run the application using one of the following commands:
     $ yarn start
     $ npm start
 
+## Code quality
+
+This project is `lint` and `prettier` using the community standard configuration of ESLint.
+
+To format your code using [Prettier](https://prettier.io/) run the following command in the root directory:
+
+    $ npx prettier --write "**/*.{js,json,jsx,sass,scss}"
+
+This project is test using the `Shallow Rendering API` from [Enzyme](https://enzymejs.github.io/enzyme/).
+
+To run those test run the following command in the root directory:
+
+    $ npm test
+
 ### Development Roadmap
 
-- [x] Create a start screen.
-- [x] Create the game board.
-- [x] Implement the basic game mechanics.
-- [x] Implement the flag feature.
-- [x] Implement a restart button.
-- [ ] Design a scoreboard.
+- [ ] Code refactoring inluding `useEffect` extraction tu custom hooks where it apply.
+- [x] Create start screen.
+- [x] Create game board.
+- [x] Design scoreboard.
+- [x] Implement basic game mechanics.
+- [x] Implement flag feature.
 - [ ] Implement multiplayer capabilities.
-- [ ] Do some refactoring.
+- [x] Implement test suites.
+
+## Easter Egg
+
+There is an `easter egg` inside the game mechanics. Can you find it?
 
 ## Licence
 
