@@ -1,0 +1,14 @@
+.scoreboard {
+  background-color: #dfe6e9;
+  height: 100vh;
+}
+
+.scoreboard__navigation {
+  color: inherit;
+  text-decoration: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}

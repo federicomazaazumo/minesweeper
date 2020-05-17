@@ -1,0 +1,47 @@
+.gameboard__cell {
+  background-color: #0984e3;
+  border-bottom-color: #065ea3;
+  border-left-color: #74b9ff;
+  border-right-color: #065ea3;
+  border-style: solid;
+  border-top-color: #74b9ff;
+  border-width: 0.25rem;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  height: 4rem;
+  line-height: 3.25rem;
+  text-align: center;
+  vertical-align: top;
+  width: 4rem;
+}
+
+.gameboard__cell--visited {
+  background-color: #a29bfe;
+  border: 0.25rem solid #6c5ce7;
+  color: white;
+}
+
+.gameboard__container {
+  height: 100vh;
+}
+
+.gameboard__content {
+  height: 100vh;
+}
+
+.gameboard__flag-icon {
+  color: #ffeaa7;
+}
+
+.gameboard__navigation {
+  color: inherit;
+  text-decoration: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}

@@ -1,0 +1,14 @@
+.startscreen {
+  background-color: #dfe6e9;
+  height: 100vh;
+}
+
+.startscreen__navigation {
+  color: inherit;
+  text-decoration: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}
