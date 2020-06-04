@@ -1,4 +1,4 @@
-# Santex Code Challenge
+# Santex/IT Crowd Code Challenge
 
 Minesweeper video game using JavaScrip, Redux, and React, with Semantic UI.
 
