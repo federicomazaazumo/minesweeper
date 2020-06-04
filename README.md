@@ -30,7 +30,7 @@ To run those test run the following command in the root directory:
 
 ### Development Roadmap
 
-- [ ] Code refactoring inluding `useEffect` extraction tu custom hooks where it apply.
+- [X] Code refactoring inluding `useEffect` extraction tu custom hooks where it apply.
 - [x] Create start screen.
 - [x] Create game board.
 - [x] Design scoreboard.
