@@ -13,14 +13,12 @@ import { Link } from "react-router-dom";
 import { ScoreBoard } from "../../state/slices";
 import StatusCard from "../../components/StatusCard";
 import { useHistory } from "react-router-dom";
+import useBoardGeneration from "../../hooks/useBoardGeneration";
 
 const GameBoard = () => {
   const { Column, Row } = Grid;
   const { setGameOnScoreBoard } = ScoreBoard.actions;
 
-  const [board, setBoard] = useState([[]]);
-  const [bombs, setBombs] = useState(0);
-  const [cells, setCells] = useState([[]]);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -31,64 +29,7 @@ const GameBoard = () => {
   const boardWidth = useSelector((state) => state.gameBoard.boardWidth);
   const playerNickname = useSelector((state) => state.gameBoard.playerNickname);
 
-  useEffect(() => {
-    let boardMatrix = Array(Number(boardHeight))
-      .fill(0)
-      .map(() => Array(Number(boardWidth)).fill(0));
-
-    const cellMatrix = Array(Number(boardHeight))
-      .fill(0)
-      .map(() => Array(Number(boardWidth)).fill(0));
-
-    let count = 0;
-
-    for (let index = 0; index < boardMatrix.length; index++) {
-      const position = Math.floor(Math.random() * Math.floor(boardWidth));
-
-      boardMatrix[index][position] = "X";
-      count++;
-    }
-
-    for (let A = 0; A < boardMatrix.length; A++) {
-      for (let B = 0; B < boardMatrix[A].length; B++) {
-        if (boardMatrix[A][B] !== "X") {
-          let summation = 0;
-
-          if (A > 0 && boardMatrix[A - 1][B] === "X") summation++;
-          if (A < boardMatrix.length - 1 && boardMatrix[A + 1][B] === "X")
-            summation++;
-          if (B < boardMatrix.length - 1 && boardMatrix[A][B + 1] === "X")
-            summation++;
-          if (B > 0 && boardMatrix[A][B - 1] === "X") summation++;
-          if (
-            A < boardMatrix.length - 1 &&
-            B > 0 &&
-            boardMatrix[A + 1][B - 1] === "X"
-          )
-            summation++;
-          if (
-            A < boardMatrix.length - 1 &&
-            B < boardMatrix.length - 1 &&
-            boardMatrix[A + 1][B + 1] === "X"
-          )
-            summation++;
-          if (A > 0 && B > 0 && boardMatrix[A - 1][B - 1] === "X") summation++;
-          if (
-            A > 0 &&
-            B < boardMatrix.length - 1 &&
-            boardMatrix[A - 1][B + 1] === "X"
-          )
-            summation++;
-
-          boardMatrix[A][B] = summation;
-        }
-      }
-    }
-
-    setBoard(boardMatrix);
-    setBombs(count);
-    setCells(cellMatrix);
-  }, [boardHeight, boardWidth]);
+  const [board, bombs, cells, setBoard, setBombs, setCells] = useBoardGeneration(boardHeight, boardWidth);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

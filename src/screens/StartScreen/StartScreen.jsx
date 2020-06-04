@@ -31,7 +31,7 @@ const StartScreen = () => {
         <Column textAlign="center">
           <Link className="startscreen__navigation" to="/scoreboard">
             <Button primary size="huge">
-              Return to the start screen
+              Go to the scoreboard
             </Button>
           </Link>
         </Column>
