@@ -38,6 +38,7 @@ To run those test run the following command in the root directory:
 - [x] Implement flag feature.
 - [ ] Implement multiplayer capabilities.
 - [x] Implement test suites.
+- [ ] Implement per page authorization.
 
 ## Easter Egg
 
